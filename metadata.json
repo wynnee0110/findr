@@ -1,0 +1,7 @@
+{
+  "name": "Findr",
+  "description": "A centralized platform for the USTP community to report, search, and claim lost and found items.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
