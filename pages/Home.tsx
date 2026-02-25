@@ -47,7 +47,7 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div className="pb-28 pt-2 px-6 max-w-5xl mx-auto min-h-screen">
+    <div className="pb-28 pt-2 px-6 max-w-4xl mx-auto min-h-screen">
       
       {/* Creative Header */}
       <div className="mb-6 mt-4 relative">

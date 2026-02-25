@@ -22,7 +22,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen font-sans text-gray-900 dark:text-gray-100 flex justify-center transition-colors duration-300">
-      <div className="w-full max-w-md md:max-w-5xl min-h-screen bg-gray-50/50 dark:bg-gray-950 shadow-2xl relative transition-colors duration-300 flex flex-col">
+      <div className="w-full  min-h-screen bg-gray-50/50 dark:bg-gray-950 shadow-2xl relative transition-colors duration-300 flex flex-col">
         {!hideTopBar && <TopBar />}
         <main className="w-full flex-1">
             {children}
