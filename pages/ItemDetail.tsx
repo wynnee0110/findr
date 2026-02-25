@@ -44,113 +44,131 @@ export const ItemDetail: React.FC = () => {
   const isLost = item.type === ItemType.LOST;
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 pb-24 transition-colors duration-300">
-      {/* Immersive Header Image */}
-      <div className="fixed top-0 left-0 w-full h-[45vh] z-0">
-        <img 
-            src={item.imageUrl} 
-            alt={item.title} 
-            className={`w-full h-full object-cover transition-all duration-700 ${item.status === ItemStatus.RESOLVED ? 'grayscale brightness-50' : ''}`} 
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/20"></div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-6 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+      
+      <div className="max-w-6xl mx-auto">
         
-        {/* Nav */}
-        <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10">
-            <button onClick={() => navigate(-1)} className="p-3 bg-white/20 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/30 transition-colors">
-                <ChevronLeft size={24} />
+        {/* Top Navigation Bar */}
+        <div className="flex justify-between items-center mb-6">
+            <button 
+                onClick={() => navigate(-1)} 
+                className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-sm"
+            >
+                <ChevronLeft size={20} />
+                <span className="font-semibold text-sm">Back</span>
             </button>
-            <div className="flex gap-3">
-                <button className="p-3 bg-white/20 backdrop-blur-xl border border-white/20 rounded-full text-white hover:bg-white/30 transition-colors">
-                    <Share2 size={20} />
-                </button>
-            </div>
-        </div>
-      </div>
-
-      {/* Spacer to push content down */}
-      <div className="h-[35vh]"></div>
-
-      {/* Floating Content Sheet */}
-      <div className="relative z-10 bg-white dark:bg-gray-950 rounded-t-[2.5rem] min-h-[65vh] shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] px-8 py-10 animate-slide-up transition-colors duration-300">
-        
-        {/* Pull handle indicator */}
-        <div className="w-12 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-8"></div>
-
-        <div className="flex justify-between items-start mb-6">
-            <div className="flex-1 mr-4">
-                 <div className="flex items-center gap-2 mb-3">
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                        isLost ? 'bg-red-50 dark:bg-red-900/30 text-brand-red' : 'bg-green-50 dark:bg-green-900/30 text-brand-green'
-                    }`}>
-                        {item.type}
-                    </span>
-                    <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-                        {item.category}
-                    </span>
-                </div>
-                <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white leading-tight">{item.title}</h1>
-            </div>
-            {item.status === ItemStatus.RESOLVED && (
-                <div className="flex flex-col items-center justify-center w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-2xl text-brand-green shadow-inner">
-                    <ShieldCheck size={28} />
-                </div>
-            )}
+            <button className="p-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-sm">
+                <Share2 size={20} />
+            </button>
         </div>
 
-        {/* Reporter Info */}
-        <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 mb-8 transition-colors">
-            <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center text-brand-blue shadow-sm font-bold text-lg">
-                {item.contactName.charAt(0)}
-            </div>
-            <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Reported by</p>
-                <p className="font-bold text-gray-800 dark:text-gray-200">{item.contactName}</p>
-            </div>
-        </div>
-
-        {/* Description */}
-        <div className="mb-8">
-            <h3 className="font-bold text-gray-900 dark:text-white mb-3 text-lg">Details</h3>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base font-medium">
-                {item.description}
-            </p>
-        </div>
-
-        {/* Info Grid */}
-        <div className="grid grid-cols-2 gap-4 mb-10">
-            <div className="p-5 rounded-[1.5rem] bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 flex flex-col gap-2">
-                <MapPin size={24} className="text-brand-blue mb-1" />
-                <span className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold">Location</span>
-                <span className="font-bold text-gray-800 dark:text-gray-200">{item.location}</span>
-            </div>
-            <div className="p-5 rounded-[1.5rem] bg-yellow-50/50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 flex flex-col gap-2">
-                <Calendar size={24} className="text-brand-yellow mb-1" />
-                <span className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold">Date</span>
-                <span className="font-bold text-gray-800 dark:text-gray-200">{item.date}</span>
-            </div>
-        </div>
-
-        {/* Action Area */}
-        {item.status !== ItemStatus.RESOLVED && (
-            <div className="pb-8 flex flex-col gap-4">
-                <div className="flex gap-4">
-                    <Button variant="secondary" className="flex-1" size="lg">
-                        <MessageCircle size={20} className="mr-2" />
-                        Chat
-                    </Button>
-                    <Button 
-                        fullWidth 
-                        size="lg"
-                        variant={isLost ? 'primary' : 'primary'}
-                        onClick={handleClaim}
-                        isLoading={claiming}
-                        className="flex-[2]"
-                    >
-                        {isLost ? 'I Found It' : 'Claim Item'}
-                    </Button>
+        {/* Main Content Card: Stacked on mobile, side-by-side on desktop */}
+        <div className="bg-white dark:bg-gray-950 rounded-[2rem] shadow-xl overflow-hidden flex flex-col lg:flex-row border border-gray-100 dark:border-gray-800">
+            
+            {/* Left Column: Image Area */}
+            <div className="w-full lg:w-1/2 p-4 lg:p-6 bg-gray-50/50 dark:bg-gray-900/50 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 dark:border-gray-800">
+                <div className="relative w-full aspect-square lg:h-full lg:min-h-[500px] bg-gray-200 dark:bg-gray-800 rounded-[1.5rem] overflow-hidden flex items-center justify-center">
+                    <img 
+                        src={item.imageUrl} 
+                        alt={item.title} 
+                        /* object-contain ensures the whole item is visible regardless of aspect ratio */
+                        className={`w-full h-full object-contain p-2 transition-all duration-700 ${item.status === ItemStatus.RESOLVED ? 'grayscale opacity-60' : ''}`} 
+                    />
+                    
+                    {/* Resolved Overlay */}
+                    {item.status === ItemStatus.RESOLVED && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm">
+                            <div className="bg-white/90 dark:bg-gray-900/90 px-6 py-3 rounded-full flex items-center gap-2 text-brand-green shadow-lg font-bold">
+                                <ShieldCheck size={24} />
+                                <span>Item Resolved</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-        )}
+
+            {/* Right Column: Details Area */}
+            <div className="w-full lg:w-1/2 p-6 lg:p-10 flex flex-col justify-between">
+                
+                <div>
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                            isLost ? 'bg-red-50 dark:bg-red-900/30 text-brand-red' : 'bg-green-50 dark:bg-green-900/30 text-brand-green'
+                        }`}>
+                            {item.type}
+                        </span>
+                        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                            {item.category}
+                        </span>
+                    </div>
+                    
+                    <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight mb-6">
+                        {item.title}
+                    </h1>
+
+                    {/* Info Grid */}
+                    <div className="grid grid-cols-2 gap-4 mb-8">
+                        <div className="p-4 rounded-[1.25rem] bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-start gap-3">
+                            <MapPin size={20} className="text-brand-blue mt-0.5" />
+                            <div>
+                                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold mb-1">Location</p>
+                                <p className="font-bold text-sm text-gray-800 dark:text-gray-200 leading-tight">{item.location}</p>
+                            </div>
+                        </div>
+                        <div className="p-4 rounded-[1.25rem] bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 flex items-start gap-3">
+                            <Calendar size={20} className="text-brand-yellow mt-0.5" />
+                            <div>
+                                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold mb-1">Date</p>
+                                <p className="font-bold text-sm text-gray-800 dark:text-gray-200 leading-tight">{item.date}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Description */}
+                    <div className="mb-8">
+                        <h3 className="font-bold text-gray-900 dark:text-white mb-2">Description</h3>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm lg:text-base">
+                            {item.description}
+                        </p>
+                    </div>
+
+                    {/* Reporter Info */}
+                    <div className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 mb-8 border border-gray-100 dark:border-gray-800">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center text-brand-blue shadow-sm font-bold border border-gray-100 dark:border-gray-700">
+                                {item.contactName.charAt(0)}
+                            </div>
+                            <div>
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Reported by</p>
+                                <p className="font-bold text-gray-800 dark:text-gray-200">{item.contactName}</p>
+                            </div>
+                        </div>
+                        {item.status !== ItemStatus.RESOLVED && (
+                            <Button variant="secondary" size="sm">
+                                <MessageCircle size={16} className="mr-2" />
+                                Chat
+                            </Button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Bottom Action Area */}
+                {item.status !== ItemStatus.RESOLVED && (
+                    <div className="pt-6 mt-auto border-t border-gray-100 dark:border-gray-800">
+                        <Button 
+                            fullWidth 
+                            size="lg"
+                            variant={isLost ? 'primary' : 'primary'}
+                            onClick={handleClaim}
+                            isLoading={claiming}
+                            className="py-4 text-lg"
+                        >
+                            {isLost ? 'I Found It' : 'Claim Item'}
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </div>
       </div>
     </div>
   );
