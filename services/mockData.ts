@@ -89,7 +89,7 @@ let MOCK_NOTIFICATIONS: Notification[] = [
     relatedItemId: '2'
   }
 ];
-
+  
 let MOCK_CLAIMS: Claim[] = [];
 
 // --- HELPERS ---

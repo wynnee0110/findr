@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext } from 'react';
+import { useUser, useClerk } from '@clerk/clerk-react';
 import { User, UserRole } from '../types';
-import { loginUser } from '../services/mockData';
 
 interface AuthContextType {
   user: User | null;
-  login: (role: UserRole) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -12,43 +11,25 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { user: clerkUser, isLoaded } = useUser();
+  const { signOut } = useClerk();
 
-  useEffect(() => {
-    // Check local storage on mount
-    const storedUser = localStorage.getItem('findr_user');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (e) {
-        console.error("Failed to parse user data from local storage", e);
-        localStorage.removeItem('findr_user');
-      }
+  const user: User | null = clerkUser
+    ? {
+      id: clerkUser.id,
+      name: clerkUser.fullName ?? clerkUser.username ?? 'User',
+      email: clerkUser.primaryEmailAddress?.emailAddress ?? '',
+      role: (clerkUser.publicMetadata?.role as UserRole) ?? UserRole.STUDENT,
+      avatarUrl: clerkUser.imageUrl,
     }
-    setIsLoading(false);
-  }, []);
-
-  const login = async (role: UserRole) => {
-    setIsLoading(true);
-    try {
-      const userData = await loginUser(role);
-      setUser(userData);
-      localStorage.setItem('findr_user', JSON.stringify(userData));
-    } catch (error) {
-      console.error("Login failed", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    : null;
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('findr_user');
+    signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, logout, isLoading: !isLoaded }}>
       {children}
     </AuthContext.Provider>
   );

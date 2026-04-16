@@ -4,6 +4,7 @@ import { Item, ItemType, ItemStatus } from '../types';
 import { getItemById, markAsResolved } from '../services/mockData';
 import { Button } from '../components/Button';
 import { ChevronLeft, MapPin, Calendar, ShieldCheck, Share2, MessageCircle } from 'lucide-react';
+import { useUser } from '@clerk/clerk-react';
 
 export const ItemDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -11,6 +12,8 @@ export const ItemDetail: React.FC = () => {
   const [item, setItem] = useState<Item | null>(null);
   const [loading, setLoading] = useState(true);
   const [claiming, setClaiming] = useState(false);
+  const { isSignedIn } = useUser();
+
 
   useEffect(() => {
     if (id) {
@@ -21,13 +24,15 @@ export const ItemDetail: React.FC = () => {
     }
   }, [id]);
 
-  const handleClaim = async () => {
-      setClaiming(true);
-      if (id) await markAsResolved(id);
-      if (item) setItem({...item, status: ItemStatus.RESOLVED});
-      setClaiming(false);
-  };
+const handleClaimClick = () => {
+  if (!isSignedIn) {
+    navigate("/sign-in");
+    return;
+  }
 
+  // open modal OR navigate to claim page
+  navigate(`/claim/${id}`);
+};
   if (loading) return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
           <div className="w-12 h-12 border-4 border-gray-200 dark:border-gray-800 border-t-brand-blue rounded-full animate-spin"></div>
@@ -155,16 +160,14 @@ export const ItemDetail: React.FC = () => {
                 {/* Bottom Action Area */}
                 {item.status !== ItemStatus.RESOLVED && (
                     <div className="pt-6 mt-auto border-t border-gray-100 dark:border-gray-800">
-                        <Button 
-                            fullWidth 
-                            size="lg"
-                            variant={isLost ? 'primary' : 'primary'}
-                            onClick={handleClaim}
-                            isLoading={claiming}
-                            className="py-4 text-lg"
-                        >
-                            {isLost ? 'I Found It' : 'Claim Item'}
-                        </Button>
+<Button 
+  fullWidth 
+  size="lg"
+  onClick={handleClaimClick}
+  className="py-4 text-lg"
+>
+  I Have This Item
+</Button>
                     </div>
                 )}
             </div>
