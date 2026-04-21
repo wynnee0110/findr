@@ -68,10 +68,10 @@ function App() {
           <Router>
             <Layout>
               <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/sign-in" element={<SignIn />} />
                 <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/" element={<Home />} />
                 <Route path="/report" element={<ProtectedRoute><Report /></ProtectedRoute>} />
                 <Route path="/item/:id" element={<ItemDetail />} />
                 <Route path="/itemReport/:id" element={<ItemReport />} />

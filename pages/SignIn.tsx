@@ -3,21 +3,25 @@ import { useSignIn } from '@clerk/clerk-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
+
 export const SignIn: React.FC = () => {
     const { signIn, setActive, isLoaded } = useSignIn();
     const navigate = useNavigate();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+ 
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!isLoaded) return;
         setError('');
         setIsSubmitting(true);
+
+    
 
         try {
             const result = await signIn.create({

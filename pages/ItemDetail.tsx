@@ -13,7 +13,7 @@ export const ItemDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [claiming, setClaiming] = useState(false);
   const { isSignedIn } = useUser();
-
+const [showClaimModal, setShowClaimModal] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -30,7 +30,6 @@ const handleClaimClick = () => {
     return;
   }
 
-  // open modal OR navigate to claim page
   navigate(`/claim/${id}`);
 };
   if (loading) return (
@@ -166,7 +165,7 @@ const handleClaimClick = () => {
   onClick={handleClaimClick}
   className="py-4 text-lg"
 >
-  I Have This Item
+  Send Claim
 </Button>
                     </div>
                 )}

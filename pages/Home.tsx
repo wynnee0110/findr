@@ -15,6 +15,7 @@ export const Home: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [dateRange, setDateRange] = useState({ start: '', end: '' });
   const [activeType, setActiveType] = useState<ItemType | 'ALL'>('ALL');
+  
 
   const fetchItems = async () => {
     setLoading(true);

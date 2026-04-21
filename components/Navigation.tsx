@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { getNotifications } from '../services/mockData';
 import { UserRole } from '../types';
+import '../global.css';
 
 export const TopBar: React.FC = () => {
   const { user } = useAuth();
@@ -23,12 +24,17 @@ export const TopBar: React.FC = () => {
   return (
     <div className="sticky top-0 z-40 bg-gray-50/80 dark:bg-gray-950/80 backdrop-blur-xl px-6 py-4 flex items-center justify-between transition-colors duration-300">
       <div className="flex items-center gap-2.5" onClick={() => navigate('/')}>
-         <div className="relative w-8 h-8 flex items-center justify-center bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden cursor-pointer transition-colors">
-            <div className="w-full h-full bg-brand-blue opacity-100"></div>
-            <div className="absolute inset-0 bg-white dark:bg-gray-900 m-[2px] rounded-[10px] flex items-center justify-center transition-colors">
-                 <div className="w-2 h-2 rounded-full bg-brand-blue"></div>
-            </div>
-         </div>
+<div className="relative w-8 h-8 flex items-center justify-center rounded-xl overflow-hidden cursor-pointer">
+
+  {/* Animated gradient border */}
+  <div className="absolute inset-0 animate-spin-slow bg-[conic-gradient(#4285F4,#EA4335,#FBBC05,#34A853,#4285F4)]"></div>
+
+  {/* Inner container (creates border effect) */}
+  <div className="absolute inset-[2px] bg-white dark:bg-gray-900 rounded-[10px] flex items-center justify-center">
+    <div className="w-2 h-2 rounded-full bg-brand-red"></div>
+  </div>
+
+</div>
          <h1 className="font-sans font-bold text-xl tracking-tight text-gray-800 dark:text-gray-100 cursor-pointer transition-colors">
             Findr
          </h1>
@@ -68,11 +74,11 @@ export const BottomNav: React.FC = () => {
   return (
     <>
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-auto">
-      <div className="flex items-center gap-6 bg-gray-900/95 dark:bg-gray-800/95 backdrop-blur-xl text-white px-6 py-3 rounded-full shadow-2xl shadow-gray-900/20 border border-white/10 scale-100 transition-colors">
+      <div className="flex items-center gap-6 bg-white dark:bg-gray-800/95 backdrop-blur-xl text-white px-6 py-3 rounded-full shadow-2xl shadow-gray-900/20 border border-white/10 scale-100 transition-colors">
         
         <Link 
             to="/" 
-            className={`relative p-2 rounded-full transition-all duration-300 ${isActive('/') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+            className={`relative p-2 rounded-full transition-all duration-300 ${isActive('/') ? 'text-gray-500' : 'text-gray-400 hover:text-gray-500'}`}
         >
             <Home size={24} strokeWidth={isActive('/') ? 2.5 : 2} />
             {isActive('/') && <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-blue rounded-full"></span>}
@@ -87,7 +93,7 @@ export const BottomNav: React.FC = () => {
 
         <Link 
             to="/profile" 
-            className={`relative p-2 rounded-full transition-all duration-300 ${isActive('/profile') ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+            className={`relative p-2 rounded-full transition-all duration-300 ${isActive('/profile') ? 'text-gray-500' : 'text-gray-400 hover:text-gray-500'}`}
         >
             <User size={24} strokeWidth={isActive('/profile') ? 2.5 : 2} />
              {isActive('/profile') && <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-blue rounded-full"></span>}
